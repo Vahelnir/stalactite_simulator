@@ -15,7 +15,6 @@ public class Stalactite extends Entity implements Fallable, Growable {
     @Override
     public void tick(int currentTick) {}
 
-
     @Override
     public void grow() {
         this.height += RandomUtils.randomBetween(0, 2);

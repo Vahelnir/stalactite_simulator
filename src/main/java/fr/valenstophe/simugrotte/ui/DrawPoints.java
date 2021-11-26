@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,19 +37,21 @@ public class DrawPoints extends JPanel {
 
         g2d.setTransform(affineTransform);
 
-        int sodaStrawCount = (int) entities.stream().filter(entity -> entity instanceof Stalactite && !((Stalactite) entity).isSealed()).peek(entity -> {
+        List<Entity> entitiesCopy = new ArrayList<>(entities);
+
+        int sodaStrawCount = (int) entitiesCopy.stream().filter(entity -> entity instanceof Stalactite && !((Stalactite) entity).isSealed()).peek(entity -> {
             g2d.setColor(Color.red);
             g2d.drawLine(entity.getPosition().getX(), entity.getPosition().getY(),
                     entity.getPosition().getX() + 1, entity.getPosition().getY() + 1);
         }).count();
 
-        int stalactiteCount = (int) entities.stream().filter(entity -> entity instanceof Stalactite && ((Stalactite) entity).isSealed()).peek(entity -> {
+        int stalactiteCount = (int) entitiesCopy.stream().filter(entity -> entity instanceof Stalactite && ((Stalactite) entity).isSealed()).peek(entity -> {
             g2d.setColor(Color.yellow);
             g2d.drawLine(entity.getPosition().getX(), entity.getPosition().getY(),
                     entity.getPosition().getX() + 1, entity.getPosition().getY() + 1);
         }).count();
 
-        int waterDropCount = (int) entities.stream().filter(entity -> entity instanceof WaterDrop).peek(entity -> {
+        int waterDropCount = (int) entitiesCopy.stream().filter(entity -> entity instanceof WaterDrop).peek(entity -> {
             g2d.setColor(Color.blue);
             g2d.drawLine(entity.getPosition().getX(), entity.getPosition().getY(),
                     entity.getPosition().getX(), entity.getPosition().getY());

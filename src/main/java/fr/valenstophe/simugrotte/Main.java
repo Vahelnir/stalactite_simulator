@@ -8,9 +8,10 @@ import javax.swing.*;
 import java.util.Scanner;
 
 public class Main {
+
+    private static String title="Simulation de grotte";
     public static void main(String[] args) {
         Simulator simulator = new Simulator(new Area(100, 100));
-
 
         DrawPoints drawPoints = new DrawPoints();
         drawPoints.setEntities(simulator.getEntities());
@@ -27,15 +28,19 @@ public class Main {
     }
 
     private static void simulateTicks(Simulator simulator, JFrame frame) {
-        for (int i = 0; i < 10000; i++) {
+
+        int i=0;
+        while(true){
             simulator.tick(i);
-            frame.repaint();
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+            if(i%100==0){
+                frame.repaint();
             }
+
+            frame.setTitle(title+" - Frame : "+i);
+            i++;
         }
+
     }
 
     private static void loop(Simulator simulator) {
