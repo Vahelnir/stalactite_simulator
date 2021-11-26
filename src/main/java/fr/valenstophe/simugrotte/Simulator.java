@@ -37,14 +37,14 @@ public class Simulator {
                     WaterDrop waterDrop = (WaterDrop) currentEntity;
 
                     Optional<Entity> sodaStrawOptional = entities.stream()
-                        .filter(entity -> entity.getPosition().equals(waterDrop.getPosition()))
-                        .findFirst();
+                            .filter(entity -> entity.getPosition().equals(waterDrop.getPosition()))
+                            .findFirst();
 
                     Stalactite stalactite = sodaStrawOptional.stream()
-                        .filter(entity -> entity instanceof Stalactite)
-                        .map(entity -> (Stalactite) entity)
-                        .findFirst()
-                        .orElseGet(spawnStalactiteFromWaterDrop(waterDrop));
+                            .filter(entity -> entity instanceof Stalactite)
+                            .map(entity -> (Stalactite) entity)
+                            .findFirst()
+                            .orElseGet(spawnStalactiteFromWaterDrop(waterDrop));
 
                     stalactite.grow();
                 }
@@ -67,9 +67,9 @@ public class Simulator {
         WaterDrop waterDrop = new WaterDrop(position);
 
         Optional<Entity> nearestWaterDropOptional = entities.stream()
-            .filter(getNearestEntityPredicate(position))
-            .filter(entity -> entity instanceof WaterDrop)
-            .findFirst();
+                .filter(getNearestEntityPredicate(position))
+                .filter(entity -> entity instanceof WaterDrop)
+                .findFirst();
         if (nearestWaterDropOptional.isPresent()) {
             Growable nearestWaterDrop = (Growable) nearestWaterDropOptional.get();
             nearestWaterDrop.grow();
@@ -77,8 +77,8 @@ public class Simulator {
         }
 
         Optional<Entity> nearestEntity = entities.stream()
-            .filter(getNearestEntityPredicate(position))
-            .findFirst();
+                .filter(getNearestEntityPredicate(position))
+                .findFirst();
         if (nearestEntity.isPresent()) {
             Entity entity = nearestEntity.get();
             waterDrop.setPosition(entity.getPosition().clone());
@@ -97,5 +97,9 @@ public class Simulator {
 
     public void setArea(Area area) {
         this.area = area;
+    }
+
+    public List<Entity> getEntities() {
+        return entities;
     }
 }
