@@ -1,5 +1,6 @@
 package fr.valenstophe.simugrotte;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import fr.valenstophe.simugrotte.geometry.Position2D;
 import fr.valenstophe.simugrotte.util.RandomUtils;
 
@@ -19,7 +20,7 @@ public class Stalactite extends Entity implements Fallable, Growable {
     @Override
     public void grow() {
         this.height += RandomUtils.randomBetween(0, 2);
-        int chanceToSeal = RandomUtils.randomBetween(1, 10);
+        int chanceToSeal = RandomUtils.randomBetween(1, 20);
         if (chanceToSeal == 1) {
             this.setSealed(true);
         }

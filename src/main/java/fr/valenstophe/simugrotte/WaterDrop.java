@@ -1,5 +1,6 @@
 package fr.valenstophe.simugrotte;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import fr.valenstophe.simugrotte.geometry.Position2D;
 import fr.valenstophe.simugrotte.util.RandomUtils;
 

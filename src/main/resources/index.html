@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #entities {
+            position: relative;
+            border: 1px solid black;
+            width: 505px;
+            height: 505px;
+        }
+
+        #entities .entity {
+            position: absolute;
+        }
+
+        #entities .entity.waterdrop {
+            z-index: 2;
+            background: blue;
+            height: 3px;
+            width: 3px;
+            transform: translate(1px, 1px);
+        }
+
+        #entities .entity.stalactite {
+            z-index: 1;
+            background: yellow;
+            height: 5px;
+            width: 5px;
+        }
+
+        #entities .entity.stalactite.sealed {
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<div id="entities"></div>
+</body>
+<script defer>
+    const entitiesElement = document.getElementById("entities");
+
+    const websocket = new WebSocket("ws://localhost:4567/websocket")
+
+    function updateEntities(newEntities) {
+        [...entitiesElement.children].forEach(child => child.remove());
+        newEntities
+            .map(entity => {
+                const entityElement = document.createElement("div");
+                entityElement.classList.add("entity", entity.type.toLocaleLowerCase());
+                entityElement.style.top = entity.position.y * 5 + "px";
+                entityElement.style.left = entity.position.x * 5 + "px";
+                if (entity.type === "Stalactite" && entity.sealed) {
+                    entityElement.classList.add("sealed")
+                }
+                return entityElement
+            })
+            .forEach(element => entitiesElement.appendChild(element));
+    }
+
+    websocket.addEventListener('message', (message) => {
+        const newEntities = JSON.parse(message.data);
+
+        updateEntities(newEntities);
+    });
+
+    websocket.addEventListener('open', () => {
+        document.addEventListener("keypress", (event) => {
+            if (event.key === "n") {
+                websocket.send("step");
+            }
+        })
+    });
+</script>
+</html>
