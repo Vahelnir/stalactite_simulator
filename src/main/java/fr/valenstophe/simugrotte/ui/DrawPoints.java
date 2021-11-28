@@ -59,7 +59,7 @@ public class DrawPoints extends JPanel {
 
         g2d.drawString("WaterDrop : " + waterDropCount, -35, -25);
         g2d.drawString("SodaStraw : " + sodaStrawCount, -35, -10);
-        g2d.drawString("Stalactite : " + stalactiteCount, 60, -25);
+        g2d.drawString("Stalactite : " + stalactiteCount, 75, -25);
 
 
 //        for (int i = 0; i <= 100000; i++) {
